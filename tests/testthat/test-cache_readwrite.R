@@ -219,7 +219,7 @@ test_that("write_cache writes to the primary (first listed) cache using either `
   expect_equal(mock_args(cache_update)[[1]][["depth"]], names(config::get("tessilake")$depths)[1])
   expect_length(mock_args(sync_cache), 2)
   expect_equal(mock_args(sync_cache)[[2]][["table_name"]], "test_write_cache")
-  expect_equal(mock_args(sync_cache)[[2]][["incremental"]], TRUE)
+  expect_equal(mock_args(sync_cache)[[2]][["incremental"]], FALSE)
 })
 
 test_that("write_cache makes the primary file the most recently updated after a sync for better performance", {
