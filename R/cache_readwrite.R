@@ -240,6 +240,7 @@ cache_write <- function(x, table_name, depth, type,
   }
 
   args <- modifyList(rlang::list2(...),args)
+  args[intersect(names(args),names(formals(cache_writer)))]
 
   while(!exists("cache", inherits = F) && num_tries > 0) {
     last_error <- tryCatch(cache <- do.call(cache_writer, args),
