@@ -100,7 +100,7 @@ read_sql <- function(query, name = digest::sha1(query),
 
   if(all(mtimes < test_mtime))
     # Update caches
-    write_cache(table, table_name = name, type = "tessi", incremental = TRUE,
+    write_cache(table, table_name = name, type = "tessi", incremental = incremental,
                 primary_keys = primary_keys, date_column = date_column, partition = FALSE)
 
   read_cache(table_name = name, type = "tessi", select = select)
