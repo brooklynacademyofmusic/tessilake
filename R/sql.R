@@ -59,7 +59,7 @@ db <- new.env(parent = emptyenv())
 #' @param date_column update date column of the query to be used for incremental updates
 #' @param freshness the returned data will be at least this fresh
 #' @param incremental whether or not to load data incrementally, default is `TRUE`
-#'
+#' @inheritDotParams cache_write overwrite
 #' @return an Apache [arrow::Table]
 #' @importFrom arrow arrow_table
 #' @importFrom checkmate assert_character
@@ -83,7 +83,7 @@ read_sql <- function(query, name = digest::sha1(query),
                      select = NULL,
                      primary_keys = NULL, date_column = NULL,
                      freshness = as.difftime(7, units = "days"),
-                     incremental = TRUE) {
+                     incremental = TRUE, ...) {
 
   assert_character(query, len = 1)
   if (!is.null(date_column)) assert_character(date_column, max.len = 1)
@@ -101,7 +101,7 @@ read_sql <- function(query, name = digest::sha1(query),
   if(all(mtimes < test_mtime))
     # Update caches
     write_cache(table, table_name = name, type = "tessi", incremental = incremental,
-                primary_keys = primary_keys, date_column = date_column, partition = FALSE)
+                primary_keys = primary_keys, date_column = date_column, partition = FALSE, ...)
 
   read_cache(table_name = name, type = "tessi", select = select)
 }
@@ -117,6 +117,7 @@ read_sql <- function(query, name = digest::sha1(query),
 #' Defaults to "last_update_dt" if it exists in the table.
 #' @param freshness the returned data will be at least this fresh
 #' @param incremental whether or not to load data incrementally, default is `TRUE`
+#' @inheritDotParams cache_write overwrite
 #' @describeIn read_sql Reads a table or view from a SQL database and caches it locally using read_sql.
 #' @importFrom dplyr filter select collect
 #' @importFrom DBI dbListTables
@@ -133,7 +134,7 @@ read_sql_table <- function(table_name, schema = "dbo",
                            select = NULL,
                            primary_keys = NULL, date_column = NULL,
                            freshness = as.difftime(7, units = "days"),
-                           incremental = TRUE) {
+                           incremental = TRUE, ...) {
   table_schema <- constraint_type <- character_maximum_length <- column_name <- NULL
 
   assert_character(table_name, len = 1)
@@ -196,6 +197,6 @@ read_sql_table <- function(table_name, schema = "dbo",
     date_column = maybe_missing(date_column),
     select = select,
     freshness = freshness,
-    incremental = incremental
+    incremental = incremental, ...
   )
 }
