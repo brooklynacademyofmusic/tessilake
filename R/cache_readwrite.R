@@ -162,7 +162,7 @@ write_cache <- function(x, table_name, type,
     do.call(cache_write, args)
   }
 
-  if (sync) {sync_cache(table_name = table_name, type = type, incremental = incremental, ...)}
+  if (sync) {sync_cache(table_name = table_name, type = type, incremental = FALSE, ...)}
 
 }
 
