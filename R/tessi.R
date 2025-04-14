@@ -29,7 +29,8 @@ tessi_list_tables <- function() {
 
   try({
       config_default <- config::get()
-      config_tessi_tables <- setdiff(config::get(config = "tessi_tables"), config_default)
+      config_tessi_tables <- config::get(config = "tessi_tables")
+      config_tessi_tables <- config_tessi_tables[setdiff(names(config_tessi_tables),names(config_default))]
     },
     silent = TRUE
   )
