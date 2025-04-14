@@ -17,7 +17,7 @@ BugReports: https://github.com/skysyzygy/tessilake/issues
 Config/Needs/website:
     skysyzygy/dataAtBAM.pkgdown
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports: 
     arrow (>= 8.0.0),
     bit,
