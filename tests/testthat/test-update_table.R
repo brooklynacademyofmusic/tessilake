@@ -187,7 +187,7 @@ test_that("update_table.default updates from db incrementally when given primary
 
   expect_equal(update_table(from, to, primary_keys = c("x", "y")), expect)
   expect_equal(update_table(from, to, primary_keys = c(x, y)), expect)
-  expect_equal(update_table(from, to, primary_keys = c(x, y), delete = TRUE), collect(from))
+  expect_equal(update_table(from, to, primary_keys = c(x, y), delete = TRUE), setDT(collect(from)))
 })
 
 test_that("update_table.default updates from db incrementally when given primary_keys unless incremental is FALSE", {
@@ -199,8 +199,8 @@ test_that("update_table.default updates from db incrementally when given primary
   # and mung it up
   to[1:5000, data := runif(.N)]
 
-  expect_equal(update_table(from, to, primary_keys = c("x", "y"), incremental = FALSE), collect(from))
-  expect_equal(update_table(from, to, primary_keys = c(x, y), incremental = FALSE), collect(from))
+  expect_equal(update_table(from, to, primary_keys = c("x", "y"), incremental = FALSE), setDT(collect(from)))
+  expect_equal(update_table(from, to, primary_keys = c(x, y), incremental = FALSE), setDT(collect(from)))
 })
 
 
