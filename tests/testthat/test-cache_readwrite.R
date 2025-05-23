@@ -239,9 +239,23 @@ test_that("write_cache makes the primary file the most recently updated after a 
 
 # sync_cache --------------------------------------------------------------
 
+test_that("sync_cache does nothing when there's only one depth", {
+  tessilake <- config::get("tessilake")
+  tessilake$depths <- tessilake$depths[1]
+  stub(sync_cache, "config::get", tessilake)
+  cache_write(test_read_write, "test_sync_cache", names(tessilake$depths)[1], "stream")
+  .cache_write <- mock(cycle = TRUE)
+  stub(sync_cache, "cache_write", .cache_write)
+
+  sync_cache("test_sync_cache","stream")
+
+  expect_length(mock_args(.cache_write),0)
+
+})
+
 test_that("sync_cache updates arrow caches non-incrementally across all storages", {
   depths <- names(config::get("tessilake")$depths)
-  cache_write(test_read_write, "test_sync_cache", depths[1], "stream")
+  cache_write(test_read_write, "test_sync_cache", depths[1], "stream", overwrite = TRUE)
   .cache_write <- mock(cycle = TRUE)
   stub(sync_cache, "cache_write", .cache_write)
 

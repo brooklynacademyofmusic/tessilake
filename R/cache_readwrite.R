@@ -298,7 +298,7 @@ sync_cache <- function(table_name, type, incremental = FALSE, date_column = NULL
   mtimes <- purrr::map_vec(depths, \(depth) cache_get_mtime(table_name, depth, type))
   depths <- depths[order(mtimes, decreasing = TRUE)]
 
-  for(index in seq(2,length(depths))) {
+  for(index in seq(length(depths))[-1]) {
     if(whole_file) {
       src_path <- cache_path(table_name = table_name, depth = depths[index-1], type = type)
       dst_path <- cache_path(table_name = table_name, depth = depths[index], type = type)
@@ -333,8 +333,8 @@ sync_cache <- function(table_name, type, incremental = FALSE, date_column = NULL
     if(system2("touch",c("-t",format(max(mtimes),format = "%Y%m%d%H%M.%S"),
                        shQuote(cache_files(table_name = table_name, depth = depth, type = type))),
              stdout = NULL, stderr = NULL) != 0)
-      rlang::warn(c("Timestamp sync failed for:","*" = c(paste(depths[index], type, table_name),
-                                                         cache_files(table_name = table_name, depth = depths[index], type = type))))
+      rlang::warn(c("Timestamp sync failed for:","*" = c(paste(depth, type, table_name),
+                                                         cache_files(table_name = table_name, depth = depth, type = type))))
 
   invisible()
 }
