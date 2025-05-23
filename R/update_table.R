@@ -73,7 +73,7 @@ update_table <- function(from, to, date_column = NULL, primary_keys = NULL,
   date_column <- expr_get_names(rlang::enexpr(date_column))
 
   if (is.null(primary_keys) && is.null(date_column) || delete == TRUE && is.null(date_column) || !incremental) {
-    return(collect(from))
+    return(setDT(collect(from)))
   }
 
   if (is.null(primary_keys) && !is.null(date_column)) {
