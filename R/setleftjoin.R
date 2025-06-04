@@ -28,7 +28,6 @@ setleftjoin <- function(l, r, by = NULL) {
 
   setDT(r)
   setDT(l)
-  index_r <- indices(r)
   if (is.null(by)) {
     by <- intersect(colnames(l), colnames(r))
     message(glue("Joining on {paste(by,collapse=',')}"))
@@ -38,8 +37,6 @@ setleftjoin <- function(l, r, by = NULL) {
   by_l <- names(by) %||% by
   by_r <- unname(by)
   by_l[by_l == ""] <- by_r[by_l == ""]
-  setkeyv(l, by_l)
-  setindexv(r, by_r)
 
   # fail if there's too many matching rows in r
   if (r[, .N, by = by_r][N > 1, .N] > 0) stop(glue("{deparse(substitute(r))} must have no more than one row per join column."))
@@ -57,13 +54,11 @@ setleftjoin <- function(l, r, by = NULL) {
 
   if (length(collisions)) {
     # rename columns in l
-    l[, (cols_l) := .SD]
+    setnames(l,colnames(l),cols_l)
     l[, (setdiff(colnames(l), cols_l)) := NULL]
   }
   # and set columns from r
   l[, (cols_r) := r[l, setdiff(colnames(r), by_r), on = on, with = F]]
 
-  setindexv(r, index_r)
-  setkeyv(l, by_l)
   l
 }

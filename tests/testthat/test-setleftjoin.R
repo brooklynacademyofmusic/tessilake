@@ -28,12 +28,12 @@ r <- data.table(b = seq(1:100), c = sample(1:1000, 100))
 r1 <- r
 
 test_that("setleftjoin handles missing 'by' argument", {
-  expect_mapequal(setleftjoin(copy(l), r), merge(l, r, all.x = T))
+  expect_mapequal(setleftjoin(copy(l), r) %>% setkeyv("b"), merge(l, r, all.x = T))
   expect_no_side_effects_on_r()
 })
 
 test_that("setleftjoin handles character 'by' argument", {
-  expect_mapequal(setleftjoin(copy(l), r, by = "b"), merge(l, r, by = "b", all.x = T))
+  expect_mapequal(setleftjoin(copy(l), r, by = "b") %>% setkeyv("b"), merge(l, r, by = "b", all.x = T))
   expect_no_side_effects_on_r()
 })
 
@@ -58,14 +58,14 @@ test_that("setleftjoin succeeds when there's more or less than one matching row 
   l0 <- l[-1, ]
   l2 <- l[c(1, 1:.N)]
 
-  expect_mapequal(setleftjoin(copy(l0), r), merge(l0, r, all.x = T))
-  expect_mapequal(setleftjoin(copy(l2), r), merge(l2, r, all.x = T))
+  expect_mapequal(setleftjoin(copy(l0), r) %>% setkeyv("b"), merge(l0, r, all.x = T))
+  expect_mapequal(setleftjoin(copy(l2), r) %>% setkeyv("b"), merge(l2, r, all.x = T))
 })
 
 test_that("setleftjoin succeeds when there's NAs in l or r", {
   l1 <- copy(l)[1, "b" := NA]
   r1 <- copy(r)[1, "b" := NA]
 
-  expect_mapequal(setleftjoin(copy(l1), r), merge(l1, r, all.x = T))
-  expect_mapequal(setleftjoin(copy(l), r1), merge(l, r1, all.x = T))
+  expect_mapequal(setleftjoin(copy(l1), r) %>% setkeyv("b"), merge(l1, r, all.x = T))
+  expect_mapequal(setleftjoin(copy(l), r1) %>% setkeyv("b"), merge(l, r1, all.x = T))
 })
