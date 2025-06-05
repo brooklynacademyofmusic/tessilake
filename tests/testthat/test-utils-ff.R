@@ -69,6 +69,11 @@ test_that("fix_vmode sets vmode on integer values based on the number of bits re
   ))
 })
 
+test_that("fix_vmode sets vmode on integer values even when they're out of range", {
+  vec_oor <- c(-.Machine$integer.max*2,.Machine$integer.max*2)
+  expect_equal(map_chr(vec_oor, ~ vmode(fix_vmode(.))), c("double","double"))
+})
+
 test_that("fix_vmode sets vmode on decimal values", {
   local_create_vec()
   vecs <- map(vecs,~{.[1]=.[1]+.01; .})
