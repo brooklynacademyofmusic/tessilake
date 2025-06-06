@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 [![codecov](https://codecov.io/gh/skysyzygy/tessilake/branch/master/graph/badge.svg?token=B8FAIEVRJW)](https://codecov.io/gh/skysyzygy/tessilake)
-[![R-CMD-check](https://github.com/skysyzygy/tessilake/workflows/R-CMD-check/badge.svg)](https://github.com/skysyzygy/tessilake/actions)
+[![R-CMD-check](https://github.com/brooklynacademyofmusic/tessilake/workflows/R-CMD-check/badge.svg)](https://github.com/brooklynacademyofmusic/tessilake/actions)
 <!-- badges: end -->
 
 Ingests data from Tessitura or other SQL database and caches it using Apache Arrow and Parquet formats
