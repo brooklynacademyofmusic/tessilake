@@ -2,7 +2,7 @@
 # tessilake
 
 <!-- badges: start -->
-[![codecov](https://codecov.io/gh/skysyzygy/tessilake/branch/master/graph/badge.svg?token=B8FAIEVRJW)](https://codecov.io/gh/skysyzygy/tessilake)
+[![codecov](https://codecov.io/gh/brooklynacademyofmusic/tessilake/branch/master/graph/badge.svg?token=B8FAIEVRJW)](https://codecov.io/gh/brooklynacademyofmusic/tessilake)
 [![R-CMD-check](https://github.com/brooklynacademyofmusic/tessilake/workflows/R-CMD-check/badge.svg)](https://github.com/brooklynacademyofmusic/tessilake/actions)
 <!-- badges: end -->
 
@@ -14,7 +14,7 @@ Install the latest version of this package by entering the following in R:
 
 ```
 install.packages("remotes")
-remotes::install_github("skysyzygy/tessilake")
+remotes::install_github("brooklynacademyofmusic/tessilake")
 ```
 
 Create a yml file in your R_USER directory called `config.yml` and add the following keys to it, filling in information
